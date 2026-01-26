@@ -12,5 +12,7 @@ func main() {
 	// fruitList[2]="peach"
 	fruitList[3]="mango"
 
-	fmt.Println("")
+	fmt.Println("Array list..", fruitList)
+
+	fmt.Println("Array list length...", len(fruitList));
 }
