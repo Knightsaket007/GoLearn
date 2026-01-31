@@ -8,4 +8,7 @@ func main() {
 	var fruitList = []string{"Apple", "Tomato", "Peach"}
 	fmt.Printf("Type of fruitList... %T\n", fruitList);
 
+	fruitList=append(fruitList[:2]);
+	fmt.Println("Fruitlist is...", fruitList)
+
 }
