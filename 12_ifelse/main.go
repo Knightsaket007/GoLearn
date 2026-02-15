@@ -9,10 +9,15 @@ func main() {
 
 	// result:="";
 	var result string;
+
 	if loginCount < 10{
 		result="Regular user"
+	} else if loginCount > 10{
+		result="Watch out"
+	}else {
+		result="exact 10 login count"
 	}
 
-	fmt.Printf("Result is %v",result);
+	fmt.Printf("Result is %s",result);
 
 }
