@@ -7,21 +7,39 @@ import (
 )
 
 func main() {
-	fmt.Println("Welcome to files in golang");
-	conent:="This needs  to go  in file (This is file content)";
+	fmt.Println("Welcome to files in golang")
+	conent := "This needs  to go  in file (This is file content)"
 
-	file, err:= os.Create("./myGoFile.txt")
+	file, err := os.Create("./myGoFile.txt")
 
-	if err!= nil{
+	if err != nil {
 		panic(err)
 	}
 
-	length, err:=io.WriteString(file, conent)
+	length, err := io.WriteString(file, conent)
 
-	if err != nil{
+	if err != nil {
 		panic(err)
 	}
 
 	fmt.Println("length is:", length)
 	defer file.Close()
+
+	// ===-=--==-=--==-=-=-=-=--=-=-==-//
+	// call readFile function
+	// ===-=--==-=--==-=-=-=-=--=-=-==-//
+
+	readFile("./myGoFile.txt")
+}
+
+func readFile(filename string) {
+
+	databyte, err:= os.ReadFile(filename);
+
+	if err != nil{
+		panic(err)
+	}
+
+	fmt.Println("text data inside the file is \n", string(databyte))
+
 }
