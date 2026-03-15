@@ -1,8 +1,11 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"net/url"
+)
 
-const myurl=""
+const myurl="https://www.helloworld.com?test=123&payment=321"
 
 func main() {
 	fmt.Println("Welcome to url handler")
@@ -10,4 +13,11 @@ func main() {
 
 	// parsing
 
+	result,_:= url.Parse(myurl)
+
+	fmt.Println(result.Scheme)
+	fmt.Println(result.Host)
+	fmt.Println(result.Path)
+	fmt.Println(result.Port())
+	fmt.Println(result.RawQuery)
 }
