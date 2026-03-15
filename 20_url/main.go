@@ -20,4 +20,7 @@ func main() {
 	fmt.Println(result.Path)
 	fmt.Println(result.Port())
 	fmt.Println(result.RawQuery)
+	
+	qparams:= result.Query()
+	fmt.Println(qparams)
 }
