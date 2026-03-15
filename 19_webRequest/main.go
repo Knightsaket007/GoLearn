@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
 )
 
@@ -19,7 +19,14 @@ func main() {
 
 	fmt.Printf("Response is of type: %T\n", response)
 
-	response.Body.Close() //=-=--=-close the connection =-=-=-=-//
+    defer response.Body.Close() //=-=--=-close the connection =-=-=-=-//
 
-	databyte, err := ioutil.ReadAll(response.Body)
+	databyte, err := io.ReadAll(response.Body);
+
+	if err !=nil{
+		panic(err);
+	}
+
+	content:= string(databyte)
+	fmt.Println("This Api content...", content)
 }
