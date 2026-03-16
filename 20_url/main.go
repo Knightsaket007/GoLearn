@@ -22,5 +22,22 @@ func main() {
 	fmt.Println(result.RawQuery)
 	
 	qparams:= result.Query()
-	fmt.Println(qparams)
+	fmt.Printf("The type of this qparams are : %T\n", qparams)
+
+	fmt.Println(qparams["payment"])
+
+	for _, val:= range qparams{
+		fmt.Println("the value of query sting:", val)
+	}
+
+
+	// =--=- Make new URL -=-=-=-//
+
+	partsOfUrl := &url.URL{
+		Scheme: "https",
+		Path: "localhost:3000",
+		RawQuery: "test=111",
+	}
+
+	fmt.Println("new url:", partsOfUrl)
 }
