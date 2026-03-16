@@ -39,5 +39,5 @@ func main() {
 		RawQuery: "test=111",
 	}
 
-	fmt.Println("new url:", partsOfUrl)
+	fmt.Println("new url:", partsOfUrl.String())
 }
