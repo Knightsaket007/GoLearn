@@ -4,11 +4,11 @@ import (
 	"fmt"
 	"io"
 	"net/http"
-	"strings"
 )
 
 func main() {
 	fmt.Println("Welcome to web verb")
+	PerformGetReq()
 }
 
 func PerformGetReq(){
@@ -26,6 +26,7 @@ func PerformGetReq(){
 	fmt.Println("Status Code : ", response.StatusCode);
 	fmt.Println("Content length is:", response.ContentLength)
 
-	var responseString strings.Builder
+	// var responseString strings.Builder
 	content,_:= io.ReadAll(response.Body)
+	fmt.Println("Content...", string(content))
 }
