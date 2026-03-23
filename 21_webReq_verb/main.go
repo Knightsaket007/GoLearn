@@ -13,7 +13,7 @@ func main() {
 
 func PerformGetReq(){
 
-	const myurl="https://localhost:8000/get"
+	const myurl="http://localhost:8000/get"
 
 	response, err:=http.Get(myurl)
 
