@@ -31,8 +31,8 @@ func PerformGetReq(){
 	var responseString strings.Builder
 	content, _:= io.ReadAll(response.Body)
 	byteCount, _:= responseString.Write(content)
-	fmt.Println("Content...", string(content))
 	fmt.Println("byteCount...", byteCount)
+	fmt.Println("Res...", responseString.String())
 
 	//--=-=-=-=-  Simple Method =-=-=-=-///
 	// content,_:= io.ReadAll(response.Body)
