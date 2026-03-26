@@ -10,6 +10,7 @@ import (
 func main() {
 	fmt.Println("Welcome to web verb")
 	PerformGetReq()
+	PerformPostJsonRequest()
 }
 
 func PerformGetReq(){
@@ -37,4 +38,32 @@ func PerformGetReq(){
 	//--=-=-=-=-  Simple Method =-=-=-=-///
 	// content,_:= io.ReadAll(response.Body)
 	// fmt.Println("Content...", string(content))
+}
+
+func PerformPostJsonRequest(){
+	const myurl="http://localhost:8000/post"
+
+	// =-=- Fake json payload =-=-//
+	requestBody :=strings.NewReader(`
+	
+	{
+	 "Name": "Saket Sourav",
+	  "Age": "200",
+	  "plateform":"VS Code"
+	}
+	`);
+
+	response, err:=http.Post(myurl, "application/json", requestBody)
+
+	if err !=nil {
+		panic(err)
+	}
+
+	defer response.Body.Close();
+
+	content, _:=io.ReadAll(response.Body)
+
+	fmt.Println(string(content))
+
+
 }
