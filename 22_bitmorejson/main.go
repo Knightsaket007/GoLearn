@@ -60,4 +60,17 @@ func DecodeJson() {
 	}else{
 		fmt.Println("Json is not valid")
 	}
+
+
+	// -===- some case where u just want to add key value ==----=--==//
+
+	var myonlineData map[string] interface{}
+
+	json.Unmarshal(jsonDatafromWeb, &myonlineData);
+	fmt.Printf("%#v\n", myonlineData);
+
+	for k,v :=range myonlineData{
+		fmt.Printf("key is %v and value is %v and type is %T", k, v,v)
+	}
+
 }
