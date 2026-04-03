@@ -12,6 +12,17 @@ type Hero struct{
  Website string `json:"website"`
 }
 
+// =--=- FAke DB ==--=-//
+
+var team[] Team;
+
+
+//=--=-= Middleware, helper -=-==-//
+func (t *Team) IsEmpty() bool{
+	return t.TeamId =="" && t.TeamName=="";
+}
+
+
 func main(){
 
 }
