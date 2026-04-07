@@ -47,3 +47,16 @@ func getAllTeam(w http.ResponseWriter, r *http.Request){
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(team)
 }
+
+func getEachTeam(w http.ResponseWriter, r *http.Request){
+	fmt.Println("Get Each Team")
+	w.Header().Set("Content-Type", "application/json")
+
+	params :=mux.Vars(r)
+
+	for _,t:= range team{
+		if t.TeamId= params["id"]{
+			json.NewEncoder(w).Encode(t)
+		}
+	}
+}
