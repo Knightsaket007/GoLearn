@@ -63,3 +63,17 @@ func getEachTeam(w http.ResponseWriter, r *http.Request){
 	json.NewEncoder(w).Encode("No Team found with given id")
 	return;
 }
+
+func createTeam(w http.ResponseWriter, r *http.Request){
+	fmt.Println("Create new Team")
+	w.Header().Set("Content-Type", "application/json")
+
+	// =-=-=-- if body is empty -=-=-=--//
+	if r.Body == nil{
+		json.NewEncoder(w).Encode("Please send some data")
+		return;
+	}	
+
+
+}
+
