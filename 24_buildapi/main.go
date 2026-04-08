@@ -75,5 +75,14 @@ func createTeam(w http.ResponseWriter, r *http.Request){
 	}	
 
 
+	// =-=-=-- what if data is in wrong format -=-=-=--//
+	var t Team   
+	_ = json.NewDecoder(r.Body).Decode(&t)
+
+	if t.IsEmpty(){
+		json.NewEncoder(w).Encode("Please send some data")
+		return;
+	} 
+
 }
 
