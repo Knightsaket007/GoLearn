@@ -54,9 +54,12 @@ func getEachTeam(w http.ResponseWriter, r *http.Request){
 
 	params :=mux.Vars(r)
 
-	for _,t:= range team{
-		if t.TeamId= params["id"]{
+	for _, t := range team{
+		if t.TeamId == params["id"]{
 			json.NewEncoder(w).Encode(t)
+			return;
 		}
 	}
+	json.NewEncoder(w).Encode("No Team found with given id")
+	return;
 }
