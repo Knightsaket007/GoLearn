@@ -4,7 +4,9 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
+	"math/rand"
 	"net/http"
+	"strconv"
 
 	"github.com/gorilla/mux"
 )
@@ -22,8 +24,7 @@ type Hero struct {
 }
 
 // =--=- FAke DB ==--=-//
-
-var team []Team
+var DBteam []Team
 
 // =--=-= Middleware, helper -=-==-//
 func (t *Team) IsEmpty() bool {
@@ -45,7 +46,7 @@ func serveHome(w http.ResponseWriter, r *http.Request) {
 func getAllTeam(w http.ResponseWriter, r *http.Request){
 	fmt.Println("Get all courses");
 	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(team)
+	json.NewEncoder(w).Encode(DBteam)
 }
 
 func getEachTeam(w http.ResponseWriter, r *http.Request){
@@ -54,7 +55,7 @@ func getEachTeam(w http.ResponseWriter, r *http.Request){
 
 	params :=mux.Vars(r)
 
-	for _, t := range team{
+	for _, t := range DBteam{
 		if t.TeamId == params["id"]{
 			json.NewEncoder(w).Encode(t)
 			return;
@@ -75,7 +76,7 @@ func createTeam(w http.ResponseWriter, r *http.Request){
 	}	
 
 
-	// =-=-=-- what if data is in wrong format -=-=-=--//
+	// =-=-=-- what if data is in wrong format like {} -=-=-=--//
 	var t Team   
 	_ = json.NewDecoder(r.Body).Decode(&t)
 
@@ -84,5 +85,15 @@ func createTeam(w http.ResponseWriter, r *http.Request){
 		return;
 	} 
 
+
+	// generate unique id, string
+	// append new team to team	
+	// rand.Seed(time.Now().UnixNano())
+	// rand.Intn(100)
+	t.TeamId = strconv.Itoa(rand.Intn(100))
+	DBteam=append(DBteam, t);
+	json.NewEncoder(w).Encode(t)
+	// return;
+	
 }
 
