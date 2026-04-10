@@ -28,7 +28,8 @@ var DBteam []Team
 
 // =--=-= Middleware, helper -=-==-//
 func (t *Team) IsEmpty() bool {
-	return t.TeamId == "" && t.TeamName == ""
+	// return t.TeamId == "" && t.TeamName == ""
+	return t.TeamName == ""
 }
 
 func main() {
@@ -97,3 +98,19 @@ func createTeam(w http.ResponseWriter, r *http.Request){
 	
 }
 
+func updateTeam(w http.ResponseWriter, r *http.Request){
+	fmt.Println("Update Team")
+	w.Header().Set("Content-Type", "application/json")	
+	params :=mux.Vars(r)
+
+	for index, t := range DBteam{
+		if t.TeamId == params["id"]{
+			// =--=-=-first deletee that value in index position -=--=-=//
+			DBteam = append(DBteam[:index], DBteam[index+1:]...)
+			var t Team   
+			_ = json.NewDecoder(r.Body).Decode(&t)
+			t.TeamId = params["id"]	
+
+		}
+	}
+}
