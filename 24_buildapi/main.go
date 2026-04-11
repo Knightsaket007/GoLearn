@@ -98,7 +98,7 @@ func createTeam(w http.ResponseWriter, r *http.Request){
 	
 }
 
-func updateTeam(w http.ResponseWriter, r *http.Request){
+func updateOneTeam(w http.ResponseWriter, r *http.Request){
 	fmt.Println("Update Team")
 	w.Header().Set("Content-Type", "application/json")	
 	params :=mux.Vars(r)
@@ -110,6 +110,9 @@ func updateTeam(w http.ResponseWriter, r *http.Request){
 			var t Team   
 			_ = json.NewDecoder(r.Body).Decode(&t)
 			t.TeamId = params["id"]	
+			DBteam = append(DBteam, t)
+			json.NewEncoder(w).Encode(t)
+			return;
 
 		}
 	}
