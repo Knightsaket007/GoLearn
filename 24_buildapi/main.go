@@ -117,3 +117,20 @@ func updateOneTeam(w http.ResponseWriter, r *http.Request){
 		}
 	}
 }
+
+func deleteOneTeam(w http.ResponseWriter, r *http.Request){
+	fmt.Println("Detete team");
+	w.Header().Set("Content-type", "application/json");
+	params:=mux.Vars(r);
+
+	//==--==- loop, id, remove(index, index+1) =--==-//
+	for index, t :=range DBteam{
+
+		if t.TeamId==params["id"]{
+			DBteam = append(DBteam[:index], DBteam[index+1:]...);
+			break;
+		}
+
+	}
+
+}
