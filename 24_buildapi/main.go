@@ -34,7 +34,10 @@ func (t *Team) IsEmpty() bool {
 
 func main() {
 	r := mux.NewRouter()
-	r.HandleFunc("/", serveHome).Methods("GET")
+	// r.HandleFunc("/", serveHome).Methods("GET")
+	DBteam = append(DBteam, Team{TeamId: "1", TeamName: "Avengers", TeamPrice: 100000, Hero: &Hero{FullName: "Tony Stark", Website: "ironman.com"}})
+	DBteam = append(DBteam, Team{TeamId: "2", TeamName: "Justice League", TeamPrice: 200000, Hero: &Hero{FullName: "Bruce Wayne", Website: "batman.com"}})
+
 
 	log.Fatal(http.ListenAndServe(":4000", r))
 }
