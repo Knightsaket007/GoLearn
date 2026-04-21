@@ -39,6 +39,18 @@ func main() {
 	DBteam = append(DBteam, Team{TeamId: "2", TeamName: "Justice League", TeamPrice: 200000, Hero: &Hero{FullName: "Bruce Wayne", Website: "batman.com"}})
 
 
+	// -=- routing =-=-//
+	r.HandleFunc("/", serveHome).Methods("GET")
+
+	r.HandleFunc("/courses", getAllTeam).Methods("GET")
+	r.HandleFunc("/courses/{id}", getEachTeam).Methods("GET")
+
+	r.HandleFunc("/course", createTeam).Methods("POST")
+
+	r.HandleFunc("/course/{id}", updateOneTeam).Methods("PUT")
+
+	r.HandleFunc("/course/{id}", deleteOneTeam).Methods("DELETE")
+
 	log.Fatal(http.ListenAndServe(":4000", r))
 }
 
