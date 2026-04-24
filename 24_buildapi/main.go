@@ -14,7 +14,7 @@ import (
 type Team struct {
 	TeamId    string `json:"tid"`
 	TeamName  string `json:"tname"`
-	TeamPrice int    `json:"price"`
+	TeamPrice int    `json:"-"`
 	Hero      *Hero  `json:"hero"`
 }
 
