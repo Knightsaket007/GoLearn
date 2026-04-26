@@ -82,13 +82,13 @@ func getEachTeam(w http.ResponseWriter, r *http.Request){
 }
 
 func createTeam(w http.ResponseWriter, r *http.Request){
-	fmt.Println("Create new Team")
+	fmt.Println("Create new Team", r.Body)
 	w.Header().Set("Content-Type", "application/json")
 
 	// =-=-=-- if body is empty -=-=-=--//
 	if r.Body == nil{
 		json.NewEncoder(w).Encode("Please send some data")
-		return;
+		// return;
 	}	
 
 
@@ -100,6 +100,13 @@ func createTeam(w http.ResponseWriter, r *http.Request){
 		json.NewEncoder(w).Encode("Please send some data")
 		return;
 	} 
+
+	// =--=-=--= If Team Name duplicate =---==-//
+	 for _ , row := range DBteam{
+		if(row.TeamName == t.TeamName){
+			json.NewEncoder(w).Encode("Duplicate value")
+		}
+	 }
 
 
 	// generate unique id, string
