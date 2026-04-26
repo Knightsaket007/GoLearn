@@ -38,7 +38,6 @@ func main() {
 	DBteam = append(DBteam, Team{TeamId: "1", TeamName: "Avengers", TeamPrice: 100000, Hero: &Hero{FullName: "Tony Stark", Website: "ironman.com"}})
 	DBteam = append(DBteam, Team{TeamId: "2", TeamName: "Justice League", TeamPrice: 200000, Hero: &Hero{FullName: "Bruce Wayne", Website: "batman.com"}})
 
-
 	// -=- routing =-=-//
 	r.HandleFunc("/", serveHome).Methods("GET")
 
@@ -59,98 +58,102 @@ func serveHome(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte("<h1>Welcome to the Team API</h1>"))
 }
 
-func getAllTeam(w http.ResponseWriter, r *http.Request){
-	fmt.Println("Get all courses");
+func getAllTeam(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("Get all courses")
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(DBteam)
 }
 
-func getEachTeam(w http.ResponseWriter, r *http.Request){
+func getEachTeam(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Get Each Team")
 	w.Header().Set("Content-Type", "application/json")
 
-	params :=mux.Vars(r)
+	params := mux.Vars(r)
 
-	for _, t := range DBteam{
-		if t.TeamId == params["id"]{
+	for _, t := range DBteam {
+		if t.TeamId == params["id"] {
 			json.NewEncoder(w).Encode(t)
-			return;
+			return
 		}
 	}
 	json.NewEncoder(w).Encode("No Team found with given id")
-	return;
+	return
 }
 
-func createTeam(w http.ResponseWriter, r *http.Request){
+func createTeam(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Create new Team", r.Body)
 	w.Header().Set("Content-Type", "application/json")
 
 	// =-=-=-- if body is empty -=-=-=--//
-	if r.Body == nil{
-		json.NewEncoder(w).Encode("Please send some data")
-		// return;
-	}	
-
+	if r.Body == nil {
+		json.NewEncoder(w).Encode("Date is empty")
+		return
+	}
 
 	// =-=-=-- what if data is in wrong format like {} -=-=-=--//
-	var t Team   
-	_ = json.NewDecoder(r.Body).Decode(&t)
+	var t Team
+	err := json.NewDecoder(r.Body).Decode(&t)
 
-	if t.IsEmpty(){
+	if err != nil {
+		fmt.Println("Decode error:", err)
+		json.NewEncoder(w).Encode("Invalid JSON")
+		return
+	}
+
+	if t.IsEmpty() {
 		json.NewEncoder(w).Encode("Please send some data")
-		return;
-	} 
+		return
+	}
 
 	// =--=-=--= If Team Name duplicate =---==-//
-	 for _ , row := range DBteam{
-		if(row.TeamName == t.TeamName){
+	for _, row := range DBteam {
+		if row.TeamName == t.TeamName {
 			json.NewEncoder(w).Encode("Duplicate value")
 		}
-	 }
-
+	}
 
 	// generate unique id, string
-	// append new team to team	
+	// append new team to team
 	// rand.Seed(time.Now().UnixNano())
 	// rand.Intn(100)
 	t.TeamId = strconv.Itoa(rand.Intn(100))
-	DBteam=append(DBteam, t);
+	DBteam = append(DBteam, t)
 	json.NewEncoder(w).Encode(t)
 	// return;
-	
+
 }
 
-func updateOneTeam(w http.ResponseWriter, r *http.Request){
+func updateOneTeam(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Update Team")
-	w.Header().Set("Content-Type", "application/json")	
-	params :=mux.Vars(r)
+	w.Header().Set("Content-Type", "application/json")
+	params := mux.Vars(r)
 
-	for index, t := range DBteam{
-		if t.TeamId == params["id"]{
+	for index, t := range DBteam {
+		if t.TeamId == params["id"] {
 			// =--=-=-first deletee that value in index position -=--=-=//
 			DBteam = append(DBteam[:index], DBteam[index+1:]...)
-			var t Team   
+			var t Team
 			_ = json.NewDecoder(r.Body).Decode(&t)
-			t.TeamId = params["id"]	
+			t.TeamId = params["id"]
 			DBteam = append(DBteam, t)
 			json.NewEncoder(w).Encode(t)
-			return;
+			return
 
 		}
 	}
 }
 
-func deleteOneTeam(w http.ResponseWriter, r *http.Request){
-	fmt.Println("Detete team");
-	w.Header().Set("Content-type", "application/json");
-	params:=mux.Vars(r);
+func deleteOneTeam(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("Detete team")
+	w.Header().Set("Content-type", "application/json")
+	params := mux.Vars(r)
 
 	//==--==- loop, id, remove(index, index+1) =--==-//
-	for index, t :=range DBteam{
+	for index, t := range DBteam {
 
-		if t.TeamId==params["id"]{
-			DBteam = append(DBteam[:index], DBteam[index+1:]...);
-			break;
+		if t.TeamId == params["id"] {
+			DBteam = append(DBteam[:index], DBteam[index+1:]...)
+			break
 		}
 
 	}
