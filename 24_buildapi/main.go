@@ -108,7 +108,8 @@ func createTeam(w http.ResponseWriter, r *http.Request) {
 	// =--=-=--= If Team Name duplicate =---==-//
 	for _, row := range DBteam {
 		if row.TeamName == t.TeamName {
-			json.NewEncoder(w).Encode("Duplicate value")
+			json.NewEncoder(w).Encode("Duplicate value");
+			return;
 		}
 	}
 
