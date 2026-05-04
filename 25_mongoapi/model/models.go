@@ -1,9 +1,11 @@
-package models;
+package models
 
-import(
+import (
 	"go.mongodb.org/mongo-driver/v2/bson"
 )
 
-type Netflix struct{
-	ID bson.ObjectID `json: "_id, omitempty" beson:"_id, omitempty"`
+type Netflix struct {
+	ID      bson.ObjectID `json: "_id,omitempty" beson:"_id,omitempty"`
+	Movie   string        `json: "movie,omitempty"`
+	Watched bool          `json:"watched,omitempty"`
 }
